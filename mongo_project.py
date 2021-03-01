@@ -29,11 +29,38 @@ def show_menu():
     return option
 
 
+def add_record():
+    print('')
+    first = input('Enter first name: ')
+    last = input('Enter last name: ')
+    dob = input('Enter dob: ')
+    gender = input('Enter gender: ')
+    hair_color = input('Enter hair color: ')
+    occupation = input('Enter occupation: ')
+    nationality = input('Enter nationality: ')
+
+    new_doc = {
+        'first': first.lower(),
+        'last': last.lower(),
+        'dob': dob,
+        'gender': gender,
+        'hair_color': hair_color,
+        'occupation': occupation,
+        'nationality': nationality
+    }
+
+    try:
+        coll.insert(new_doc)
+        print('\nDocument Inserted')
+    except:
+        print('Error accessing database')
+
+
 def main_loop():
     while True:
         option = show_menu()
         if option == '1':
-            print('You have chosen option 1')
+            add_record()
         elif option == '2':
             print('You have chosen option 2')
         elif option == '3':
@@ -51,4 +78,5 @@ def main_loop():
 
 conn = mongo_connect(MONGO_URI)
 coll = conn[DATABASE][COLLECTION]
+
 main_loop()
